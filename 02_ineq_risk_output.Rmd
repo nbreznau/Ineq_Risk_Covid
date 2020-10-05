@@ -34,14 +34,7 @@ knitr::include_graphics("results/Fig1.png")
 
 ## Figure 2
 
-```{r fig2}
-
-
-```
-### Figure 2. Outbreak Severity by Country
-
-
-As testing rates vary dramatically by country, I take the number of deaths with a 2.5 week lead as a better indicator of the severity of the outbreak by country. Those who died were inevitably sick or showing symptoms 18 days prior. 
+As testing rates vary dramatically by country, we measure the number of deaths with an 18-day  lead as a better indicator of the severity of the outbreak by country. Those who died were inevitably sick or showing symptoms 18 days prior. 
 
 ```{r Fig1, warning=F, message=F, echo=T}
 
@@ -117,7 +110,7 @@ deaths_longCLa <- deaths_longCLa %>%
          dead_lead_log = ifelse(Country == "MYS", 23.6, dead_lead_log))
 
 
-fig2 <- ggplot(data=deaths_longCa, aes(x=date , y=dead_lead_log, group=Country, color=Country)) +
+fig2 <- ggplot(data=deaths_longC, aes(x=date , y=dead_lead_log, group=Country, color=Country)) +
     geom_line() +
   labs(x= "", y = "Outbreak Severity (18 day lead of COVID-19 deaths)") +
   geom_segment(aes(x = as.Date("2020-03-27"), y = 1, xend = as.Date("2020-03-27"), yend = 135), linetype = "dashed", color = "black", size = 0.8) +
