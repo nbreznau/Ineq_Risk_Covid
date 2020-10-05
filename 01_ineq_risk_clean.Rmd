@@ -60,7 +60,7 @@ cishead <- read.csv("data/numeric/COVIDiSTRESS global survey May 25 2020 (numeri
 
 cis <- read.csv("data/numeric/COVIDiSTRESS global survey May 25 2020 (numeric values).csv")
 
-# Remove rows and rename headers (loop not working, do by hand for now)
+# Remove rows and rename headers 
 
 cis <- cis[-c(1,2),]
 colnames(cis) <- cishead
@@ -116,7 +116,7 @@ save(cis, file = "data/cis.Rdata")
 
 load(file = "data/cis.Rdata", .GlobalEnv)
 
-# Fix date & create mean of two types of risk perceptions (measurement model justifying this comes later)
+# Fix date & create mean of two types of risk perceptions (measurement model justifying this in Breznau (2020))
 
 cis <- cis %>%
   mutate(date = as.Date(StartDate),
@@ -404,6 +404,8 @@ gdpc <- completeFun(gdpc, "cow")
 
 A severity scale from researchers at Oxford University. We take the severity of 'lockdown' measures by March 15th to allow for a lag for individuals to become aware of the measures and possibly see their impact. Naumann et al ([2020](https://www.uni-mannheim.de/media/Einrichtungen/gip/Corona_Studie/Schwerpunktbericht_Angstempfinden_Mannheimer_Corona_Studie.pdf)) showed that over time, the 'panic' subsides among the public after strong measures are taken. 
 
+https://ourworldindata.org/grapher/covid-stringency-index
+
 ```{r clean_blavatnik, warning = F, message = F}
 # government response
 gov_resp <- read.csv(file = "data/covid-stringency-index.csv", header = T)
@@ -448,6 +450,8 @@ gov_resp$gov_resp = as.numeric(scale(gov_resp$gov_resp))
 
 As a robustness check we include the top 1% income concentration. We also leave the top 10% concentration in the data here although it has more missing values.
 
+https://wid.world/data/
+
 ```{r clean_ineq, message = F, warning = F}
 
 # income concentration
@@ -479,6 +483,10 @@ rm(top_inc)
 ## Solt Gini
 
 The Solt data include multiple measures of the Gini for many countries. We take the average score provided by Solt for disposable income inequality.
+
+Solt, Frederick. 2020. "Measuring Income Inequality Across Countries and Over Time: The Standardized World Income Inequality Database." Social Science Quarterly [DOI](https://doi.org/10.1111/ssqu.12795)
+
+
 
 ```{r clean_solt, warning = F, message = F}
 # Solt Gini
@@ -645,6 +653,8 @@ save.image(file="data/cis.RData")
 
 ```
 
+## References
 
+Breznau, Nate. 2020. “The Welfare State and Risk Perceptions: The Novel Coronavirus Pandemic and Public Concern in 70 Countries.” *European Societies*. [DOI](https://doi.org/10.1080/14616696.2020.1793215)
 
 
