@@ -119,9 +119,15 @@ load(file = "data/cis.Rdata", .GlobalEnv)
 # Fix date & create mean of two types of risk perceptions (measurement model justifying this in Breznau (2020))
 
 cis <- cis %>%
-  mutate(date = as.Date(StartDate),
-         concern_self = mean(c(Corona_concerns_1,Corona_concerns_2,Corona_concerns_3), na.rm=T),
+  as.data.frame() %>%
+  mutate(date = as.Date(StartDate))
+cis <- cis %>%
+  rowwise() %>%
+  mutate(concern_self = mean(c(Corona_concerns_1,Corona_concerns_2,Corona_concerns_3), na.rm=T),
          concern_society = mean(c(Corona_concerns_4,Corona_concerns_5), na.rm=T))
+
+cis$concern_self <- ifelse(cis$concern_self == "NaN", NA, cis$concern_self)
+cis$concern_society <- ifelse(cis$concern_society == "NaN", NA, cis$concern_society)
 
 # S.Sudan and Panama have very few non-missing cases, plus some countries are NA. Remove.
 cis <- subset(cis, !is.na(cow) & cow!=95)
@@ -584,10 +590,9 @@ finaldf_C <- finaldf_C %>%
 
 # Welfare State Strength Measure
 
-finaldf_C$socpolicy <- standardize(finaldf_C$soc_spend * finaldf_C$lfcov)
+finaldf_C$socpolicy <- scale(finaldf_C$soc_spend * finaldf_C$lfcov)
 
 finaldf_C$Country <- countrycode(finaldf_C$cow, "cown", "country.name")
-
 
 
 
