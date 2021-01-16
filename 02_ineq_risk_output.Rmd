@@ -209,6 +209,7 @@ df <- df %>%
          concern_self2C = concern_self2 - mean(concern_self2))
 ```
 
+
 ## Main Models
 
 ### Statistics
@@ -296,11 +297,22 @@ cor2[4,] <- round(corm[1,32:41], 2)
 cor2[5,1:11] <- 74
 cor2[5,9] <- 57
 
-colnames(cor2) <- c("Risk Perception", "SE of Risk Perception by Country", "Days Since Curve Inflection", "New Cases Past Week","Strength of Gov Intervention", "Increase in Infection (ratio May 1-31)", "Increase in Infection (per capita May 1-31)", "Disposable Income Gini", "Top 1% Income Concentration", "Welfare State", "GDP, per capita (k)")
+
+
+colnames(cor2) <- c("Risk Perception", "SE of Risk Perception by Country", "Days Since Curve Inflection", "New Cases Past Week","Strength of Gov Intervention", "Increase in Infection", "Increase in Infection per capita", "Disposable Income Gini", "Top 1% Income Concentration", "Welfare State", "GDP, per capita")
 
 cor2 <- t(cor2)
 
+colnames(cor2) <- c("Mean", "SD", "Min", "Max", "N")
+
 kable_styling(kable(cor2, col.names = c("Mean", "SD", "Min", "Max", "N")))
+
+tbl <- as.data.frame(c("3-item survey scale (COVIDiStress)", "Standard Error of individual level data","\"Outbreak Severity, actual\"; zero, or days since infection rate week-over-week started decreasing (Johns Hopkins, 18-day lead in COVID-19 deaths)", "\"Outbreak Severity, perceived\"; confirmned cases (Johns Hopkins)", "Severity of lockdown scale (Oxford/Blavatnik)","Ratio of infection, May 31st to 1","Same as above, divided by population","Average of all available data (Solt)","Top 1% share (WID)", "Labor Market Coverage (ILO) & Social Spending (OECD) averaged", "In thousands, (Maddison)"))
+
+colnames(tbl) <- c("Measurement")
+tbl1 <- cbind(tbl, cor2)
+
+write.csv(tbl1, file = "results/Tbl1.csv")
 
 ```
 
