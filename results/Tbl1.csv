@@ -1,12 +1,12 @@
-"","Mean","SD","Min","Max","N","Measurement"
-"Risk Perception",4.5,0.36,17.32,-0.94,74,"3-item survey scale (COVIDiStress)"
-"SE of Risk Perception by Country",0.1,0.09,3.65,1.96,74,"Standard Error of individual level data"
-"Days Since Curve Inflection",31.28,19.85,0.01,5.2,74,"""Outbreak Severity, actual""; zero, or days since infection rate week-over-week started decreasing (Johns Hopkins, 18-day lead in COVID-19 deaths)"
-"New Cases Past Week",0.37,0.6,0,0.34,74,"""Outbreak Severity, perceived""; confirmned cases (Johns Hopkins)"
-"Strength of Gov Intervention",0,1,-1,62,74,"Severity of lockdown scale (Oxford/Blavatnik)"
-"Increase in Infection",0.65,0.89,-2.2,1,74,"Ratio of infection, May 31st to 1"
-"Increase in Infection per capita",0.23,0.4,0,2.52,74,"Same as above, divided by population"
-"Disposable Income Gini",34.85,6.81,0,3,74,"Average of all available data (Solt)"
-"Top 1% Income Concentration",0.12,0.05,23.5,1.85,57,"Top 1% share (WID)"
-"Welfare State",0.62,1.08,0.05,49,74,"Labor Market Coverage (ILO) & Social Spending (OECD) averaged"
-"GDP, per capita",26.17,0.36,17.32,-0.94,74,"In thousands, (Maddison)"
+"","Measurement","Mean","SD","Min","Max","N"
+"Risk Perception","3-item survey scale (COVIDiStress)",4.5,0.36,17.32,-0.94,74
+"SE of Risk Perception by Country","Standard Error of individual level data",0.1,0.09,3.65,1.96,74
+"Days Since Curve Inflection","""Outbreak Severity, actual""; zero, or days since infection rate week-over-week started decreasing (Johns Hopkins, 18-day lead in COVID-19 deaths)",31.28,19.85,0.01,5.2,74
+"New Cases Past Week","""Outbreak Severity, perceived""; confirmned cases (Johns Hopkins)",0.37,0.6,0,0.34,74
+"Strength of Gov Intervention","Severity of lockdown scale (Oxford/Blavatnik)",0,1,-1,62,74
+"Increase in Infection","Ratio of infection, May 31st to 1",0.65,0.89,-2.2,1,74
+"Increase in Infection per capita","Same as above, divided by population",0.23,0.4,0,2.52,74
+"Disposable Income Gini","Average of all available data (Solt)",34.85,6.81,0,3,74
+"Top 1% Income Concentration","Top 1% share (WID)",0.12,0.05,23.5,1.85,57
+"Welfare State","Labor Market Coverage (ILO) & Social Spending (OECD) averaged",0.62,1.08,0.05,49,74
+"GDP, per capita","In thousands, (Maddison)",26.17,0.36,17.32,-0.94,74
