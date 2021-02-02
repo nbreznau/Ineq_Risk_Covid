@@ -1,8 +1,11 @@
 ---
 title: "Step 1 - Data Cleaning"
-author: "Nate Breznau, Lisa Heukamp & Hung HV Nguyen"
+author: "Anonymous"
 date: "5/18/2020"
 output:
+  word_document: default
+  pdf_document: default
+  always_allow_html: yes
   html_document: default
 ---
 
@@ -116,7 +119,7 @@ save(cis, file = "data/cis.Rdata")
 
 load(file = "data/cis.Rdata", .GlobalEnv)
 
-# Fix date & create mean of two types of risk perceptions (measurement model justifying this in Breznau (2020))
+# Fix date & create mean of two types of risk perceptions (measurement model justifying this we find in Breznau (2020))
 
 cis <- cis %>%
   as.data.frame() %>%

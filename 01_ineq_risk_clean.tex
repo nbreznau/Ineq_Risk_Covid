@@ -1,0 +1,677 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Step 1 - Data Cleaning},
+  pdfauthor={Anonymous},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+
+\title{Step 1 - Data Cleaning}
+\author{Anonymous}
+\date{5/18/2020}
+
+\begin{document}
+\maketitle
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{rm}\NormalTok{(}\DataTypeTok{list =} \KeywordTok{ls}\NormalTok{(}\DataTypeTok{all =} \OtherTok{TRUE}\NormalTok{))}
+
+\CommentTok{# this is a function to remove missing data}
+\NormalTok{completeFun <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(data, desiredCols) \{}
+\NormalTok{  completeVec <-}\StringTok{ }\KeywordTok{complete.cases}\NormalTok{(data[, desiredCols])}
+  \KeywordTok{return}\NormalTok{(data[completeVec, ])}
+\NormalTok{\}}
+
+\CommentTok{# need pacman package installed to run this}
+\CommentTok{# install.packages("pacman")}
+\NormalTok{pacman}\OperatorTok{::}\KeywordTok{p_load}\NormalTok{(}\StringTok{"dplyr"}\NormalTok{,}\StringTok{"countrycode"}\NormalTok{,}\StringTok{"tidyverse"}\NormalTok{,}\StringTok{"readstata13"}\NormalTok{,}\StringTok{"countrycode"}\NormalTok{,}\StringTok{"car"}\NormalTok{,}\StringTok{"ggplot2"}\NormalTok{,}\StringTok{"xlsx"}\NormalTok{,}\StringTok{"tidyverse"}\NormalTok{,}\StringTok{"stringi"}\NormalTok{, }\StringTok{"readxl"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{covidistress-data-project}{%
+\subsection{COVIDiSTRESS Data project}\label{covidistress-data-project}}
+
+Andreas Lieberoth, Dominik-Borna Ćepulić, Jesper Rasmussen, Giovanni A.
+Travaglino, Jarno Tuominen Available at: \url{https://osf.io/z39us/}
+
+The most recent file was downloaded on 27-May-2020 from the above site
+
+``COVIDiSTRESS global survey May 4 2020 (numeric values).csv''
+
+A comparative survey of psychological stress and pandemic attitudes.
+Online, not a random sample.
+
+Original English question wording:
+
+Concern about consequences of the coronavirus (1)\ldots for yourself
+(2)\ldots for your family (3)\ldots for your close friends (4)\ldots for
+your country (5)\ldots for other countries across the globe
+
+\hypertarget{load-data}{%
+\subsubsection{Load Data}\label{load-data}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# The data have a strange format with the first 3 rows occupied by text}
+
+\CommentTok{# Import separate file for header}
+
+\NormalTok{cishead <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"data/numeric/COVIDiSTRESS global survey May 25 2020 (numeric values).csv"}\NormalTok{, }\DataTypeTok{header =}\NormalTok{ F, }\DataTypeTok{nrows=}\DecValTok{1}\NormalTok{, }\DataTypeTok{as.is =}\NormalTok{ T)}
+
+\CommentTok{# Now import numeric data}
+
+\NormalTok{cis <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"data/numeric/COVIDiSTRESS global survey May 25 2020 (numeric values).csv"}\NormalTok{)}
+
+\CommentTok{# Remove rows and rename headers }
+
+\NormalTok{cis <-}\StringTok{ }\NormalTok{cis[}\OperatorTok{-}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{),]}
+\KeywordTok{colnames}\NormalTok{(cis) <-}\StringTok{ }\NormalTok{cishead}
+
+\KeywordTok{rm}\NormalTok{(cishead)}
+
+\CommentTok{# The country names are only listed in the 'choice' files, extract them here }
+\NormalTok{cisc <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"data/choice/COVIDiSTRESS global survey May 25 2020 (choice text).csv"}\NormalTok{)}
+
+\NormalTok{cisc <-}\StringTok{ }\NormalTok{cisc[}\OperatorTok{-}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{),]}
+
+\NormalTok{cisc}\OperatorTok{$}\NormalTok{cname <-}\StringTok{ }\NormalTok{cisc}\OperatorTok{$}\NormalTok{Country}
+
+\NormalTok{cisc <-}\StringTok{ }\KeywordTok{select}\NormalTok{(cisc, ResponseId, cname)}
+
+\CommentTok{# append country name to numeric data}
+\NormalTok{cis <-}\StringTok{ }\KeywordTok{left_join}\NormalTok{(cis,cisc, }\DataTypeTok{by =} \StringTok{"ResponseId"}\NormalTok{)}
+
+\KeywordTok{rm}\NormalTok{(cisc)}
+
+\CommentTok{# get country codes and ISO letters}
+\NormalTok{cis}\OperatorTok{$}\NormalTok{cow  <-}\StringTok{ }\KeywordTok{countrycode}\NormalTok{(cis}\OperatorTok{$}\NormalTok{cname, }\StringTok{"country.name"}\NormalTok{, }\StringTok{"cown"}\NormalTok{)}
+\NormalTok{cis}\OperatorTok{$}\NormalTok{iso  <-}\StringTok{ }\KeywordTok{countrycode}\NormalTok{(cis}\OperatorTok{$}\NormalTok{cname, }\StringTok{"country.name"}\NormalTok{, }\StringTok{"iso3c"}\NormalTok{)}
+
+
+\CommentTok{#adjust format of risk perception question}
+
+\NormalTok{cis <-}\StringTok{ }\NormalTok{cis }\OperatorTok{%>%}
+\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{Corona_concerns_1 =} \KeywordTok{as.numeric}\NormalTok{(Corona_concerns_}\DecValTok{1}\NormalTok{),}
+       \DataTypeTok{Corona_concerns_2 =} \KeywordTok{as.numeric}\NormalTok{(Corona_concerns_}\DecValTok{2}\NormalTok{),}
+       \DataTypeTok{Corona_concerns_3 =} \KeywordTok{as.numeric}\NormalTok{(Corona_concerns_}\DecValTok{3}\NormalTok{),}
+       \DataTypeTok{Corona_concerns_4 =} \KeywordTok{as.numeric}\NormalTok{(Corona_concerns_}\DecValTok{4}\NormalTok{),}
+       \DataTypeTok{Corona_concerns_5 =} \KeywordTok{as.numeric}\NormalTok{(Corona_concerns_}\DecValTok{5}\NormalTok{),}
+       \DataTypeTok{date =} \KeywordTok{as.Date}\NormalTok{(EndDate))}
+
+
+\CommentTok{#get case numbers by country (drop when too low)}
+\NormalTok{cis <-}\StringTok{ }\NormalTok{cis }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{group_by}\NormalTok{(cow) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{cases =} \KeywordTok{sum}\NormalTok{(}\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(Corona_concerns_}\DecValTok{1}\NormalTok{))) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{ungroup}\NormalTok{()}
+
+
+\CommentTok{# Save files}
+\KeywordTok{save}\NormalTok{(cis, }\DataTypeTok{file =} \StringTok{"data/cis.Rdata"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{clean-data}{%
+\subsubsection{Clean Data}\label{clean-data}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{load}\NormalTok{(}\DataTypeTok{file =} \StringTok{"data/cis.Rdata"}\NormalTok{, .GlobalEnv)}
+
+\CommentTok{# Fix date & create mean of two types of risk perceptions (measurement model justifying this we find in Breznau (2020))}
+
+\NormalTok{cis <-}\StringTok{ }\NormalTok{cis }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{as.data.frame}\NormalTok{() }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{date =} \KeywordTok{as.Date}\NormalTok{(StartDate))}
+\NormalTok{cis <-}\StringTok{ }\NormalTok{cis }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{rowwise}\NormalTok{() }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{concern_self =} \KeywordTok{mean}\NormalTok{(}\KeywordTok{c}\NormalTok{(Corona_concerns_}\DecValTok{1}\NormalTok{,Corona_concerns_}\DecValTok{2}\NormalTok{,Corona_concerns_}\DecValTok{3}\NormalTok{), }\DataTypeTok{na.rm=}\NormalTok{T),}
+         \DataTypeTok{concern_society =} \KeywordTok{mean}\NormalTok{(}\KeywordTok{c}\NormalTok{(Corona_concerns_}\DecValTok{4}\NormalTok{,Corona_concerns_}\DecValTok{5}\NormalTok{), }\DataTypeTok{na.rm=}\NormalTok{T))}
+
+\NormalTok{cis}\OperatorTok{$}\NormalTok{concern_self <-}\StringTok{ }\KeywordTok{ifelse}\NormalTok{(cis}\OperatorTok{$}\NormalTok{concern_self }\OperatorTok{==}\StringTok{ "NaN"}\NormalTok{, }\OtherTok{NA}\NormalTok{, cis}\OperatorTok{$}\NormalTok{concern_self)}
+\NormalTok{cis}\OperatorTok{$}\NormalTok{concern_society <-}\StringTok{ }\KeywordTok{ifelse}\NormalTok{(cis}\OperatorTok{$}\NormalTok{concern_society }\OperatorTok{==}\StringTok{ "NaN"}\NormalTok{, }\OtherTok{NA}\NormalTok{, cis}\OperatorTok{$}\NormalTok{concern_society)}
+
+\CommentTok{# S.Sudan and Panama have very few non-missing cases, plus some countries are NA. Remove.}
+\NormalTok{cis <-}\StringTok{ }\KeywordTok{subset}\NormalTok{(cis, }\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(cow) }\OperatorTok{&}\StringTok{ }\NormalTok{cow}\OperatorTok{!=}\DecValTok{95}\NormalTok{)}
+
+\CommentTok{# Make list of using countries (those with at least 20 cases)}
+
+\NormalTok{use_countriesa <-}\StringTok{ }\KeywordTok{as.list}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{20}\NormalTok{, }\DecValTok{55}\NormalTok{, }\DecValTok{70}\NormalTok{, }\DecValTok{90}\NormalTok{, }\DecValTok{92}\NormalTok{, }\DecValTok{94}\NormalTok{, }\DecValTok{100}\NormalTok{, }\DecValTok{130}\NormalTok{, }\DecValTok{135}\NormalTok{, }\DecValTok{140}\NormalTok{, }\DecValTok{155}\NormalTok{, }\DecValTok{160}\NormalTok{, }\DecValTok{200}\NormalTok{, }\DecValTok{205}\NormalTok{, }\DecValTok{210}\NormalTok{, }\DecValTok{211}\NormalTok{, }\DecValTok{212}\NormalTok{, }\DecValTok{220}\NormalTok{, }\DecValTok{225}\NormalTok{, }\DecValTok{230}\NormalTok{, }\DecValTok{235}\NormalTok{, }\DecValTok{255}\NormalTok{, }\DecValTok{290}\NormalTok{, }\DecValTok{305}\NormalTok{, }\DecValTok{310}\NormalTok{, }\DecValTok{316}\NormalTok{, }\DecValTok{317}\NormalTok{, }\DecValTok{325}\NormalTok{, }\DecValTok{338}\NormalTok{, }\DecValTok{339}\NormalTok{, }\DecValTok{343}\NormalTok{, }\DecValTok{344}\NormalTok{, }\DecValTok{346}\NormalTok{, }\DecValTok{349}\NormalTok{, }\DecValTok{350}\NormalTok{, }\DecValTok{352}\NormalTok{, }\DecValTok{355}\NormalTok{, }\DecValTok{360}\NormalTok{, }\DecValTok{365}\NormalTok{, }\DecValTok{366}\NormalTok{, }\DecValTok{367}\NormalTok{, }\DecValTok{368}\NormalTok{, }\DecValTok{369}\NormalTok{, }\DecValTok{372}\NormalTok{, }\DecValTok{375}\NormalTok{, }\DecValTok{380}\NormalTok{, }\DecValTok{385}\NormalTok{, }\DecValTok{390}\NormalTok{, }\DecValTok{395}\NormalTok{, }\DecValTok{560}\NormalTok{, }\DecValTok{600}\NormalTok{, }\DecValTok{615}\NormalTok{, }\DecValTok{640}\NormalTok{, }\DecValTok{651}\NormalTok{, }\DecValTok{666}\NormalTok{, }\DecValTok{696}\NormalTok{, }\DecValTok{700}\NormalTok{, }\DecValTok{703}\NormalTok{, }\DecValTok{710}\NormalTok{, }\DecValTok{713}\NormalTok{, }\DecValTok{732}\NormalTok{, }\DecValTok{740}\NormalTok{, }\DecValTok{750}\NormalTok{, }\DecValTok{770}\NormalTok{, }\DecValTok{771}\NormalTok{, }\DecValTok{816}\NormalTok{, }\DecValTok{820}\NormalTok{, }\DecValTok{830}\NormalTok{, }\DecValTok{835}\NormalTok{, }\DecValTok{840}\NormalTok{, }\DecValTok{850}\NormalTok{, }\DecValTok{900}\NormalTok{, }\DecValTok{920}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\#\#\#Johns Hopkins Covid-19 Tracker
+
+A multi-source project for compiling global confirmed cases, deaths and
+recoveries.
+
+Originally vailable at:
+\url{https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data}
+
+Confirmed cases data downloaded May 27th. Thus, includes data through
+May 26th. Confirmed deaths data downloaded Jun 21st. Includes data
+through June 20th.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{confirmed <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"data/time_series_covid19_confirmed_global.csv"}\NormalTok{, }\DataTypeTok{header =}\NormalTok{ F)}
+\NormalTok{deaths <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"data/time_series_covid19_deaths_global.csv"}\NormalTok{, }\DataTypeTok{header =}\NormalTok{ F)}
+
+
+\NormalTok{confirmed[}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{] <-}\StringTok{ "Province"}
+\NormalTok{confirmed[}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{] <-}\StringTok{ "Country"}
+\NormalTok{deaths[}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{] <-}\StringTok{ "Province"}
+\NormalTok{deaths[}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{] <-}\StringTok{ "Country"}
+
+\NormalTok{cnames <-}\StringTok{ }\KeywordTok{as.list}\NormalTok{(confirmed[}\DecValTok{1}\NormalTok{,}\DecValTok{1}\OperatorTok{:}\DecValTok{130}\NormalTok{])}
+\NormalTok{cnamesd <-}\StringTok{ }\KeywordTok{as.list}\NormalTok{(deaths[}\DecValTok{1}\NormalTok{,}\DecValTok{1}\OperatorTok{:}\DecValTok{155}\NormalTok{])}
+
+\KeywordTok{colnames}\NormalTok{(confirmed) <-}\StringTok{ }\NormalTok{cnames}
+\KeywordTok{colnames}\NormalTok{(deaths) <-}\StringTok{ }\NormalTok{cnamesd}
+
+\NormalTok{confirmed[,}\DecValTok{5}\OperatorTok{:}\DecValTok{130}\NormalTok{] <-}\StringTok{ }\KeywordTok{sapply}\NormalTok{(confirmed[}\DecValTok{5}\OperatorTok{:}\DecValTok{130}\NormalTok{],as.numeric)}
+\NormalTok{deaths[,}\DecValTok{5}\OperatorTok{:}\DecValTok{155}\NormalTok{] <-}\StringTok{ }\KeywordTok{sapply}\NormalTok{(deaths[}\DecValTok{5}\OperatorTok{:}\DecValTok{155}\NormalTok{],as.numeric)}
+
+\CommentTok{# Canada, Australia and China are by province, not a sum}
+
+\NormalTok{cca <-}\StringTok{ }\KeywordTok{subset}\NormalTok{(confirmed, Country}\OperatorTok{==}\StringTok{"Australia"}\NormalTok{, }\DataTypeTok{select =} \OperatorTok{-}\KeywordTok{c}\NormalTok{(Province,Country,Lat,Long))}
+\NormalTok{ccca <-}\StringTok{ }\KeywordTok{subset}\NormalTok{(confirmed, Country}\OperatorTok{==}\StringTok{"Canada"}\NormalTok{, }\DataTypeTok{select =} \OperatorTok{-}\KeywordTok{c}\NormalTok{(Province,Country,Lat,Long))}
+\NormalTok{ccch <-}\StringTok{ }\KeywordTok{subset}\NormalTok{(confirmed, Country}\OperatorTok{==}\StringTok{"China"}\NormalTok{, }\DataTypeTok{select =} \OperatorTok{-}\KeywordTok{c}\NormalTok{(Province,Country,Lat,Long))}
+\NormalTok{ccad <-}\StringTok{ }\KeywordTok{subset}\NormalTok{(deaths, Country}\OperatorTok{==}\StringTok{"Australia"}\NormalTok{, }\DataTypeTok{select =} \OperatorTok{-}\KeywordTok{c}\NormalTok{(Province,Country,Lat,Long))}
+\NormalTok{cccad <-}\StringTok{ }\KeywordTok{subset}\NormalTok{(deaths, Country}\OperatorTok{==}\StringTok{"Canada"}\NormalTok{, }\DataTypeTok{select =} \OperatorTok{-}\KeywordTok{c}\NormalTok{(Province,Country,Lat,Long))}
+\NormalTok{ccchd <-}\StringTok{ }\KeywordTok{subset}\NormalTok{(deaths, Country}\OperatorTok{==}\StringTok{"China"}\NormalTok{, }\DataTypeTok{select =} \OperatorTok{-}\KeywordTok{c}\NormalTok{(Province,Country,Lat,Long))}
+
+
+\NormalTok{a <-}\StringTok{ }\KeywordTok{as.data.frame}\NormalTok{(}\KeywordTok{colSums}\NormalTok{(cca, }\DataTypeTok{na.rm =}\NormalTok{ T))}
+\NormalTok{b <-}\StringTok{ }\KeywordTok{as.data.frame}\NormalTok{(}\KeywordTok{colSums}\NormalTok{(ccca, }\DataTypeTok{na.rm =}\NormalTok{ T))}
+\NormalTok{c <-}\StringTok{ }\KeywordTok{as.data.frame}\NormalTok{(}\KeywordTok{colSums}\NormalTok{(ccch, }\DataTypeTok{na.rm =}\NormalTok{ T))}
+\NormalTok{ad <-}\StringTok{ }\KeywordTok{as.data.frame}\NormalTok{(}\KeywordTok{colSums}\NormalTok{(ccad, }\DataTypeTok{na.rm =}\NormalTok{ T))}
+\NormalTok{bd <-}\StringTok{ }\KeywordTok{as.data.frame}\NormalTok{(}\KeywordTok{colSums}\NormalTok{(cccad, }\DataTypeTok{na.rm =}\NormalTok{ T))}
+\NormalTok{cd <-}\StringTok{ }\KeywordTok{as.data.frame}\NormalTok{(}\KeywordTok{colSums}\NormalTok{(ccchd, }\DataTypeTok{na.rm =}\NormalTok{ T))}
+
+\NormalTok{aa <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\StringTok{"All"}\NormalTok{,}\StringTok{"Australia"}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\KeywordTok{t}\NormalTok{(a))}
+\NormalTok{bb <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\StringTok{"All"}\NormalTok{,}\StringTok{"Canada"}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\KeywordTok{t}\NormalTok{(b)) }
+\NormalTok{cc <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\StringTok{"All"}\NormalTok{,}\StringTok{"China"}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\KeywordTok{t}\NormalTok{(c))}
+\NormalTok{aaa <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\StringTok{"All"}\NormalTok{,}\StringTok{"Australia"}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\KeywordTok{t}\NormalTok{(ad))}
+\NormalTok{bbb <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\StringTok{"All"}\NormalTok{,}\StringTok{"Canada"}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\KeywordTok{t}\NormalTok{(bd)) }
+\NormalTok{ccc <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\StringTok{"All"}\NormalTok{,}\StringTok{"China"}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\KeywordTok{t}\NormalTok{(cd))}
+
+\KeywordTok{colnames}\NormalTok{(aa) <-}\StringTok{ }\NormalTok{cnames}
+\KeywordTok{colnames}\NormalTok{(bb) <-}\StringTok{ }\NormalTok{cnames}
+\KeywordTok{colnames}\NormalTok{(cc) <-}\StringTok{ }\NormalTok{cnames}
+\KeywordTok{colnames}\NormalTok{(aaa) <-}\StringTok{ }\NormalTok{cnamesd}
+\KeywordTok{colnames}\NormalTok{(bbb) <-}\StringTok{ }\NormalTok{cnamesd}
+\KeywordTok{colnames}\NormalTok{(ccc) <-}\StringTok{ }\NormalTok{cnamesd}
+
+\CommentTok{# add the three missing countries}
+\NormalTok{confirmed <-}\StringTok{ }\KeywordTok{rbind}\NormalTok{(confirmed,aa,bb,cc)}
+\NormalTok{deaths <-}\StringTok{ }\KeywordTok{rbind}\NormalTok{(deaths,aaa,bbb,ccc)}
+
+\CommentTok{# remove province-level data}
+\NormalTok{confirmed <-}\StringTok{ }\KeywordTok{subset}\NormalTok{(confirmed, Province}\OperatorTok{==}\StringTok{""} \OperatorTok{|}\StringTok{ }\NormalTok{Province}\OperatorTok{==}\StringTok{"All"}\NormalTok{)}
+\NormalTok{deaths <-}\StringTok{ }\KeywordTok{subset}\NormalTok{(deaths, Province}\OperatorTok{==}\StringTok{""} \OperatorTok{|}\StringTok{ }\NormalTok{Province}\OperatorTok{==}\StringTok{"All"}\NormalTok{)}
+
+\KeywordTok{rm}\NormalTok{(a,b,c,aa,bb,cc,ad,bd,cd,aaa,bbb,ccc,cca,ccca,ccch,ccad,cccad,ccchd)}
+
+\NormalTok{confirmed <-}\StringTok{ }\KeywordTok{subset}\NormalTok{(confirmed, }\DataTypeTok{select =} \OperatorTok{-}\KeywordTok{c}\NormalTok{(Province,Lat,Long))}
+\NormalTok{deaths <-}\StringTok{ }\KeywordTok{subset}\NormalTok{(deaths, }\DataTypeTok{select =} \OperatorTok{-}\KeywordTok{c}\NormalTok{(Province,Lat,Long))}
+
+\CommentTok{# Final data for merging, wide}
+\NormalTok{hopkins <-}\StringTok{ }\KeywordTok{left_join}\NormalTok{(confirmed, deaths, }\DataTypeTok{by =} \StringTok{"Country"}\NormalTok{)}
+\NormalTok{hopkins}\OperatorTok{$}\NormalTok{cow <-}\StringTok{ }\KeywordTok{countrycode}\NormalTok{(hopkins}\OperatorTok{$}\NormalTok{Country, }\StringTok{"country.name"}\NormalTok{, }\StringTok{"cown"}\NormalTok{)}
+
+\KeywordTok{colnames}\NormalTok{(confirmed) <-}\StringTok{ }\KeywordTok{paste0}\NormalTok{(}\StringTok{"conf"}\NormalTok{,}\KeywordTok{colnames}\NormalTok{(confirmed))}
+\KeywordTok{colnames}\NormalTok{(confirmed)[}\DecValTok{1}\NormalTok{] <-}\StringTok{ "Country"}
+
+\KeywordTok{colnames}\NormalTok{(deaths) <-}\StringTok{ }\KeywordTok{paste0}\NormalTok{(}\StringTok{"dead"}\NormalTok{,}\KeywordTok{colnames}\NormalTok{(deaths))}
+\KeywordTok{colnames}\NormalTok{(deaths)[}\DecValTok{1}\NormalTok{] <-}\StringTok{ "Country"}
+
+
+\NormalTok{confirmed_long <-}\StringTok{ }\KeywordTok{reshape}\NormalTok{(confirmed, }\DataTypeTok{idvar =} \StringTok{"Country"}\NormalTok{, }\DataTypeTok{direction =} \StringTok{"long"}\NormalTok{, }\DataTypeTok{v.names =} \StringTok{"conf"}\NormalTok{, }\DataTypeTok{varying =} \DecValTok{2}\OperatorTok{:}\DecValTok{127}\NormalTok{)}
+
+\NormalTok{deaths_long <-}\StringTok{ }\KeywordTok{reshape}\NormalTok{(deaths, }\DataTypeTok{idvar =} \StringTok{"Country"}\NormalTok{, }\DataTypeTok{direction =} \StringTok{"long"}\NormalTok{, }\DataTypeTok{v.names =} \StringTok{"dead"}\NormalTok{, }\DataTypeTok{varying =} \DecValTok{2}\OperatorTok{:}\DecValTok{151}\NormalTok{)}
+
+\NormalTok{datel <-}\StringTok{ }\KeywordTok{seq.Date}\NormalTok{(}\KeywordTok{as.Date}\NormalTok{(}\StringTok{"2020-1-22"}\NormalTok{),}\KeywordTok{as.Date}\NormalTok{(}\StringTok{"2020-5-26"}\NormalTok{), }\DataTypeTok{by =} \StringTok{"days"}\NormalTok{)}
+\NormalTok{datea <-}\StringTok{ }\KeywordTok{seq.int}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{126}\NormalTok{)}
+\NormalTok{dateld <-}\StringTok{ }\KeywordTok{seq.Date}\NormalTok{(}\KeywordTok{as.Date}\NormalTok{(}\StringTok{"2020-1-22"}\NormalTok{),}\KeywordTok{as.Date}\NormalTok{(}\StringTok{"2020-6-20"}\NormalTok{), }\DataTypeTok{by =} \StringTok{"days"}\NormalTok{)}
+\NormalTok{datead <-}\StringTok{ }\KeywordTok{seq.int}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{151}\NormalTok{)}
+  
+  
+\NormalTok{datem <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{time =}\NormalTok{ datea, }\DataTypeTok{date =}\NormalTok{ datel)}
+\NormalTok{datemd <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{time =}\NormalTok{ datead, }\DataTypeTok{date =}\NormalTok{ dateld)}
+\NormalTok{datem}\OperatorTok{$}\NormalTok{date <-}\StringTok{ }\KeywordTok{as.Date}\NormalTok{(datem}\OperatorTok{$}\NormalTok{date)}
+\NormalTok{datemd}\OperatorTok{$}\NormalTok{date <-}\StringTok{ }\KeywordTok{as.Date}\NormalTok{(datemd}\OperatorTok{$}\NormalTok{date)}
+
+\NormalTok{deaths_long <-}\StringTok{ }\KeywordTok{left_join}\NormalTok{(deaths_long,datemd)}
+\NormalTok{confirmed_long <-}\StringTok{ }\KeywordTok{left_join}\NormalTok{(confirmed_long,datem)}
+
+\NormalTok{deaths_long}\OperatorTok{$}\NormalTok{cow <-}\StringTok{ }\KeywordTok{countrycode}\NormalTok{(deaths_long}\OperatorTok{$}\NormalTok{Country, }\StringTok{"country.name"}\NormalTok{, }\StringTok{"cown"}\NormalTok{)}
+\NormalTok{confirmed_long}\OperatorTok{$}\NormalTok{cow <-}\StringTok{ }\KeywordTok{countrycode}\NormalTok{(confirmed_long}\OperatorTok{$}\NormalTok{Country, }\StringTok{"country.name"}\NormalTok{, }\StringTok{"cown"}\NormalTok{)}
+
+\CommentTok{# lagged versions, 5-days }
+\CommentTok{# We include additional variables that were not used in the final analysis}
+
+\CommentTok{# sort first}
+\NormalTok{deaths_long <-}\StringTok{ }\NormalTok{deaths_long[}\KeywordTok{order}\NormalTok{(deaths_long}\OperatorTok{$}\NormalTok{cow, deaths_long}\OperatorTok{$}\NormalTok{date),]}
+\NormalTok{confirmed_long <-}\StringTok{ }\NormalTok{confirmed_long[}\KeywordTok{order}\NormalTok{(confirmed_long}\OperatorTok{$}\NormalTok{cow, confirmed_long}\OperatorTok{$}\NormalTok{date),]}
+
+\NormalTok{deaths_long <-}\StringTok{ }\NormalTok{deaths_long }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{dead_l5 =} \KeywordTok{lag}\NormalTok{(dead, }\DataTypeTok{n =}\NormalTok{ 5L),}
+         \DataTypeTok{dead_lead =} \KeywordTok{lead}\NormalTok{(dead, }\DataTypeTok{n =}\NormalTok{ 18L), }\CommentTok{# create 2.5 week lead (18 days)}
+         \DataTypeTok{dead_s =} \KeywordTok{ifelse}\NormalTok{(dead }\OperatorTok{>}\StringTok{ }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{),}\CommentTok{# first death ID}
+         \DataTypeTok{dead_s1l =} \KeywordTok{lag}\NormalTok{(dead_s, 1L),}
+         \DataTypeTok{dead_dif =}\NormalTok{ dead_s }\OperatorTok{-}\StringTok{ }\NormalTok{dead_s1l,}
+         \DataTypeTok{dead_dif =} \KeywordTok{ifelse}\NormalTok{(cow }\OperatorTok{==}\StringTok{ }\DecValTok{710} \OperatorTok{&}\StringTok{ }\NormalTok{date }\OperatorTok{==}\StringTok{ }\KeywordTok{as.Date}\NormalTok{(}\StringTok{"2020-01-22"}\NormalTok{), }\DecValTok{1}\NormalTok{, dead_dif))}
+         
+\CommentTok{# first death date}
+
+\NormalTok{deaths_long <-}\StringTok{ }\NormalTok{deaths_long }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{group_by}\NormalTok{(cow) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{dead_1st =}\NormalTok{ dplyr}\OperatorTok{::}\KeywordTok{if_else}\NormalTok{(dead_dif }\OperatorTok{==}\StringTok{ }\DecValTok{1}\NormalTok{, }\KeywordTok{as.Date}\NormalTok{(date), }\KeywordTok{as.Date}\NormalTok{(}\StringTok{"2020-06-02"}\NormalTok{)),}
+         \DataTypeTok{dead_1st_date =} \KeywordTok{min}\NormalTok{(dead_1st, }\DataTypeTok{na.rm=}\NormalTok{T)) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{ungroup}\NormalTok{()}
+
+\NormalTok{confirmed_long <-}\StringTok{ }\NormalTok{confirmed_long }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{conf_l5 =} \KeywordTok{lag}\NormalTok{(conf, }\DataTypeTok{n =}\NormalTok{ 5L),}
+         \DataTypeTok{conf_l10 =} \KeywordTok{lag}\NormalTok{(conf, }\DataTypeTok{n =}\NormalTok{ 10L))}
+
+
+\NormalTok{deaths_long <-}\StringTok{ }\KeywordTok{select}\NormalTok{(deaths_long, dead, dead_l5, dead_lead, dead_1st_date, date, cow)}
+\NormalTok{confirmed_long <-}\StringTok{ }\KeywordTok{select}\NormalTok{(confirmed_long, conf, conf_l5, conf_l10, date, cow)}
+
+\CommentTok{# l5 variable comes from the wrong series prior to 1-27}
+\NormalTok{deaths_long}\OperatorTok{$}\NormalTok{dead_l5 <-}\StringTok{ }\KeywordTok{ifelse}\NormalTok{(deaths_long}\OperatorTok{$}\NormalTok{date }\OperatorTok{<}\StringTok{ }\KeywordTok{as.Date}\NormalTok{(}\StringTok{"2020-01-27"}\NormalTok{), }\OtherTok{NA}\NormalTok{, deaths_long}\OperatorTok{$}\NormalTok{dead_l5)}
+
+\NormalTok{confirmed_long}\OperatorTok{$}\NormalTok{conf_l5 <-}\StringTok{ }\KeywordTok{ifelse}\NormalTok{(confirmed_long}\OperatorTok{$}\NormalTok{date }\OperatorTok{<}\StringTok{ }\KeywordTok{as.Date}\NormalTok{(}\StringTok{"2020-01-27"}\NormalTok{), }\OtherTok{NA}\NormalTok{, confirmed_long}\OperatorTok{$}\NormalTok{conf_l5)}
+\NormalTok{confirmed_long}\OperatorTok{$}\NormalTok{conf_l10 <-}\StringTok{ }\KeywordTok{ifelse}\NormalTok{(confirmed_long}\OperatorTok{$}\NormalTok{date }\OperatorTok{<}\StringTok{ }\KeywordTok{as.Date}\NormalTok{(}\StringTok{"2020-02-01"}\NormalTok{), }\OtherTok{NA}\NormalTok{, confirmed_long}\OperatorTok{$}\NormalTok{conf_l10)}
+
+\CommentTok{# increasing or decreasing rate past week, numbers are so different that I make a trichotomy: < 1 = -1, 0-1 = 0 and > 1 = 1}
+\NormalTok{confirmed_long}\OperatorTok{$}\NormalTok{conf_delta <-}\StringTok{ }\NormalTok{(confirmed_long}\OperatorTok{$}\NormalTok{conf }\OperatorTok{-}\StringTok{ }\NormalTok{confirmed_long}\OperatorTok{$}\NormalTok{conf_l5) }\OperatorTok{-}\StringTok{ }\NormalTok{(confirmed_long}\OperatorTok{$}\NormalTok{conf_l5 }\OperatorTok{-}\StringTok{ }\NormalTok{confirmed_long}\OperatorTok{$}\NormalTok{conf_l10)}
+
+\NormalTok{confirmed_long}\OperatorTok{$}\NormalTok{conf_delta <-}\StringTok{ }\KeywordTok{ifelse}\NormalTok{(confirmed_long}\OperatorTok{$}\NormalTok{conf_delta }\OperatorTok{<}\StringTok{ }\DecValTok{0}\NormalTok{, }\DecValTok{-1}\NormalTok{, }\KeywordTok{ifelse}\NormalTok{(confirmed_long }\OperatorTok{<}\StringTok{ }\FloatTok{1.01}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{))}
+
+
+
+\CommentTok{# Merge cases and deaths per date of survey per respondent}
+
+
+\CommentTok{# Find the moment when the curve 'flattens'}
+
+\NormalTok{deaths_long <-}\StringTok{ }\NormalTok{deaths_long }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{dead_lead12 =} \KeywordTok{lag}\NormalTok{(dead_lead, 12L),}
+         \DataTypeTok{dead_lead11 =} \KeywordTok{lag}\NormalTok{(dead_lead, 11L),}
+         \DataTypeTok{dead_lead10 =} \KeywordTok{lag}\NormalTok{(dead_lead, 10L),}
+         \DataTypeTok{dead_lead9 =} \KeywordTok{lag}\NormalTok{(dead_lead, 9L),}
+         \DataTypeTok{dead_lead8 =} \KeywordTok{lag}\NormalTok{(dead_lead, 8L),}
+         \DataTypeTok{dead_lead5 =} \KeywordTok{lag}\NormalTok{(dead_lead, 5L),}
+         \DataTypeTok{dead_lead4 =} \KeywordTok{lag}\NormalTok{(dead_lead, 4L),}
+         \DataTypeTok{dead_lead3 =} \KeywordTok{lag}\NormalTok{(dead_lead, 3L),}
+         \DataTypeTok{dead_lead2 =} \KeywordTok{lag}\NormalTok{(dead_lead, 2L),}
+         \DataTypeTok{dead_lead1 =} \KeywordTok{lag}\NormalTok{(dead_lead, 1L),}
+         \DataTypeTok{dead_lead_past12 =}\NormalTok{ (dead_lead12 }\OperatorTok{+}\StringTok{ }\NormalTok{dead_lead11 }\OperatorTok{+}\StringTok{ }\NormalTok{dead_lead10 }\OperatorTok{+}\StringTok{ }\NormalTok{dead_lead9 }\OperatorTok{+}\StringTok{ }\NormalTok{dead_lead8)}\OperatorTok{/}\DecValTok{5}\NormalTok{,}
+         \DataTypeTok{dead_lead_past5 =}\NormalTok{ (dead_lead5 }\OperatorTok{+}\StringTok{ }\NormalTok{dead_lead4 }\OperatorTok{+}\StringTok{ }\NormalTok{dead_lead3 }\OperatorTok{+}\StringTok{ }\NormalTok{dead_lead2 }\OperatorTok{+}\StringTok{ }\NormalTok{dead_lead1)}\OperatorTok{/}\DecValTok{5}\NormalTok{,}
+         \DataTypeTok{dead_lead_wkchg =}\NormalTok{ dead_lead_past12 }\OperatorTok{-}\StringTok{ }\NormalTok{dead_lead_past5)}
+
+\CommentTok{# find the minimum point of weekly change, this is the height of the curve}
+
+\NormalTok{deaths_long <-}\StringTok{ }\NormalTok{deaths_long }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{group_by}\NormalTok{(cow) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{curve_maxd =} \KeywordTok{min}\NormalTok{(dead_lead_wkchg, }\DataTypeTok{na.rm=}\NormalTok{T),}
+         \DataTypeTok{curve_maxs =}\NormalTok{ dplyr}\OperatorTok{::}\KeywordTok{if_else}\NormalTok{(curve_maxd }\OperatorTok{==}\StringTok{ }\NormalTok{dead_lead_wkchg, }\KeywordTok{as.Date}\NormalTok{(date), }\KeywordTok{as.Date}\NormalTok{(}\StringTok{"2020-6-2"}\NormalTok{)),}
+         \DataTypeTok{curve_max =} \KeywordTok{min}\NormalTok{(curve_maxs, }\DataTypeTok{na.rm=}\NormalTok{T)) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{ungroup}\NormalTok{()}
+
+\NormalTok{deaths_long <-}\StringTok{ }\KeywordTok{subset}\NormalTok{(deaths_long, }\DataTypeTok{select =} \OperatorTok{-}\KeywordTok{c}\NormalTok{(curve_maxd, curve_maxs))}
+
+
+\KeywordTok{rm}\NormalTok{(cis_na)}
+
+\NormalTok{cis}\OperatorTok{$}\NormalTok{date =}\StringTok{ }\KeywordTok{as.Date}\NormalTok{(cis}\OperatorTok{$}\NormalTok{EndDate)}
+\NormalTok{cis <-}\StringTok{ }\KeywordTok{left_join}\NormalTok{(cis,deaths_long, }\DataTypeTok{by =} \KeywordTok{c}\NormalTok{(}\StringTok{"cow"}\NormalTok{,}\StringTok{"date"}\NormalTok{))}
+\NormalTok{cis <-}\StringTok{ }\KeywordTok{left_join}\NormalTok{(cis,confirmed_long, }\DataTypeTok{by =} \KeywordTok{c}\NormalTok{(}\StringTok{"cow"}\NormalTok{,}\StringTok{"date"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{welfare-state-strength}{%
+\subsection{Welfare State Strength}\label{welfare-state-strength}}
+
+\hypertarget{ilo-worker-protection-coverage}{%
+\subsubsection{ILO Worker Protection
+Coverage}\label{ilo-worker-protection-coverage}}
+
+ILO. 2014. ``Global Programme Employment Injury Insurance and Protection
+\textbar{} GEIP Data.''
+\url{https://www.ilo.org/wcmsp5/groups/public/---ed_emp/---emp_ent/documents/publication/wcms_573083.pdf}
+
+\hypertarget{ilo---social-spending}{%
+\subsubsection{ILO - Social Spending}\label{ilo---social-spending}}
+
+Public Social Expenditure as a \% of GDP (Table .16)
+\url{https://www.social-protection.org/gimi/gess/ShowWiki.action?id=594\#tabs-3}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{socp <-}\StringTok{ }\KeywordTok{read.xlsx}\NormalTok{(}\StringTok{"data/54614.xlsx"}\NormalTok{, }\DataTypeTok{startrow =} \DecValTok{8}\NormalTok{, }\DataTypeTok{sheetName =} \StringTok{"B.16 Data (Print)"}\NormalTok{)}
+
+\NormalTok{socp <-}\StringTok{ }\KeywordTok{completeFun}\NormalTok{(socp, }\StringTok{"NA..1"}\NormalTok{)}
+
+\NormalTok{socp <-}\StringTok{ }\KeywordTok{select}\NormalTok{(socp, NA..}\DecValTok{1}\NormalTok{, NA..}\DecValTok{18}\NormalTok{, NA..}\DecValTok{19}\NormalTok{, NA..}\DecValTok{20}\NormalTok{)}
+
+\KeywordTok{colnames}\NormalTok{(socp) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"country"}\NormalTok{,}\StringTok{"soc_spend"}\NormalTok{,}\StringTok{"year"}\NormalTok{,}\StringTok{"source"}\NormalTok{)}
+
+\NormalTok{socp}\OperatorTok{$}\NormalTok{country <-}\StringTok{ }\KeywordTok{as.character}\NormalTok{(socp}\OperatorTok{$}\NormalTok{country)}
+\NormalTok{socp}\OperatorTok{$}\NormalTok{soc_spend <-}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(}\KeywordTok{as.character}\NormalTok{(socp}\OperatorTok{$}\NormalTok{soc_spend))}
+
+\NormalTok{socp}\OperatorTok{$}\NormalTok{cow <-}\StringTok{ }\KeywordTok{countrycode}\NormalTok{(socp}\OperatorTok{$}\NormalTok{country, }\StringTok{"country.name"}\NormalTok{,}\StringTok{"cown"}\NormalTok{)}
+
+\NormalTok{socp <-}\StringTok{ }\KeywordTok{completeFun}\NormalTok{(socp, }\StringTok{"soc_spend"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{maddison-data---gdp}{%
+\subsection{Maddison Data - GDP}\label{maddison-data---gdp}}
+
+Maddison Project data from
+\url{https://www.rug.nl/ggdc/historicaldevelopment/maddison/releases/maddison-project-database-2018?lang=en}
+
+2018 or latest data
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{gdpm <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"data/mpd2018.csv"}\NormalTok{, }\DataTypeTok{header=}\NormalTok{T, }\DataTypeTok{stringsAsFactors =}\NormalTok{ F)}
+
+\NormalTok{gdpm <-}\StringTok{ }\KeywordTok{subset}\NormalTok{(gdpm, year }\OperatorTok{>}\StringTok{ }\DecValTok{2013}\NormalTok{)}
+\NormalTok{gdpm <-}\StringTok{ }\KeywordTok{select}\NormalTok{(gdpm, country, cgdppc, pop)}
+\NormalTok{gdpc <-}\StringTok{ }\KeywordTok{aggregate}\NormalTok{(gdpm, }\DataTypeTok{by =} \KeywordTok{list}\NormalTok{(gdpm}\OperatorTok{$}\NormalTok{country), }\DataTypeTok{FUN =}\NormalTok{ mean)}
+\NormalTok{gdpc}\OperatorTok{$}\NormalTok{cow <-}\StringTok{ }\KeywordTok{countrycode}\NormalTok{(gdpc}\OperatorTok{$}\NormalTok{Group}\FloatTok{.1}\NormalTok{, }\StringTok{"country.name"}\NormalTok{, }\StringTok{"cown"}\NormalTok{)}
+\NormalTok{gdpc <-}\StringTok{ }\NormalTok{gdpc }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{gdp =} \KeywordTok{round}\NormalTok{(cgdppc,}\DecValTok{0}\NormalTok{),}
+         \DataTypeTok{pop =} \KeywordTok{round}\NormalTok{(pop,}\DecValTok{0}\NormalTok{))}
+\NormalTok{gdpc <-}\StringTok{ }\KeywordTok{select}\NormalTok{(gdpc, cow, gdp, pop)}
+
+\NormalTok{gdpc <-}\StringTok{ }\KeywordTok{completeFun}\NormalTok{(gdpc, }\StringTok{"cow"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{blavatnik-government-data}{%
+\subsection{Blavatnik Government Data}\label{blavatnik-government-data}}
+
+A severity scale from researchers at Oxford University. We take the
+severity of `lockdown' measures by March 15th to allow for a lag for
+individuals to become aware of the measures and possibly see their
+impact. Naumann et al
+(\href{https://www.uni-mannheim.de/media/Einrichtungen/gip/Corona_Studie/Schwerpunktbericht_Angstempfinden_Mannheimer_Corona_Studie.pdf}{2020})
+showed that over time, the `panic' subsides among the public after
+strong measures are taken.
+
+\url{https://ourworldindata.org/grapher/covid-stringency-index}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# government response}
+\NormalTok{gov_resp <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\DataTypeTok{file =} \StringTok{"data/covid-stringency-index.csv"}\NormalTok{, }\DataTypeTok{header =}\NormalTok{ T)}
+
+
+\CommentTok{# get country codes}
+\NormalTok{gov_resp}\OperatorTok{$}\NormalTok{cow <-}\StringTok{ }\KeywordTok{countrycode}\NormalTok{(gov_resp}\OperatorTok{$}\NormalTok{Entity, }\StringTok{"country.name"}\NormalTok{, }\StringTok{"cown"}\NormalTok{)}
+
+\NormalTok{gov_resp <-}\StringTok{ }\NormalTok{gov_resp }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{group_by}\NormalTok{(cow) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{drop =} \KeywordTok{ifelse}\NormalTok{(Date }\OperatorTok{==}\StringTok{ "15-Mar-20"}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{)) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{ungroup}\NormalTok{()}
+
+\NormalTok{gov_resp <-}\StringTok{ }\KeywordTok{subset}\NormalTok{(gov_resp, drop }\OperatorTok{==}\StringTok{ }\DecValTok{0}\NormalTok{)}
+\NormalTok{gov_resp <-}\StringTok{ }\KeywordTok{subset}\NormalTok{(gov_resp, cow }\OperatorTok{%in%}\StringTok{ }\NormalTok{use_countriesa)}
+\KeywordTok{colnames}\NormalTok{(gov_resp) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"1"}\NormalTok{,}\StringTok{"2"}\NormalTok{,}\StringTok{"3"}\NormalTok{,}\StringTok{"gov_resp"}\NormalTok{,}\StringTok{"cow"}\NormalTok{,}\StringTok{"4"}\NormalTok{)}
+\NormalTok{gov_resp <-}\StringTok{ }\KeywordTok{select}\NormalTok{(gov_resp, cow, gov_resp)}
+
+\CommentTok{# impute Grenada, Malta and N Macedonia (using Wikipedia info)}
+\CommentTok{# Grenada, strong lockdown, very few cases. Score = 87}
+\CommentTok{# Malta, moderate measures. Score = 70}
+\CommentTok{# N Macedonia, very strong, near total lockdown. Score = 93}
+
+\NormalTok{gov_resp[}\DecValTok{72}\NormalTok{,}\DecValTok{1}\NormalTok{] <-}\StringTok{ }\DecValTok{55}
+\NormalTok{gov_resp[}\DecValTok{72}\NormalTok{,}\DecValTok{2}\NormalTok{] <-}\StringTok{ }\DecValTok{87}
+
+\NormalTok{gov_resp[}\DecValTok{73}\NormalTok{,}\DecValTok{1}\NormalTok{] <-}\StringTok{ }\DecValTok{338}
+\NormalTok{gov_resp[}\DecValTok{73}\NormalTok{,}\DecValTok{2}\NormalTok{] <-}\StringTok{ }\DecValTok{70}
+
+\NormalTok{gov_resp[}\DecValTok{74}\NormalTok{,}\DecValTok{1}\NormalTok{] <-}\StringTok{ }\DecValTok{343}
+\NormalTok{gov_resp[}\DecValTok{74}\NormalTok{,}\DecValTok{2}\NormalTok{] <-}\StringTok{ }\DecValTok{93}
+
+
+\CommentTok{# standardize for ease of interpretation}
+
+\NormalTok{gov_resp}\OperatorTok{$}\NormalTok{gov_resp =}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(}\KeywordTok{scale}\NormalTok{(gov_resp}\OperatorTok{$}\NormalTok{gov_resp))}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{income-concentration}{%
+\subsection{Income Concentration}\label{income-concentration}}
+
+As a robustness check we include the top 1\% income concentration. We
+also leave the top 10\% concentration in the data here although it has
+more missing values.
+
+\url{https://wid.world/data/}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# income concentration}
+\NormalTok{top_inc <-}\StringTok{ }\KeywordTok{read_xlsx}\NormalTok{(}\StringTok{"data/WID_Data_14082020-111941.xlsx"}\NormalTok{)}
+
+
+\NormalTok{top_inc <-}\StringTok{ }\NormalTok{top_inc }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{cow =} \KeywordTok{countrycode}\NormalTok{(Country, }\StringTok{"country.name"}\NormalTok{, }\StringTok{"cown"}\NormalTok{))}
+
+\NormalTok{top_inc1 <-}\StringTok{ }\KeywordTok{subset}\NormalTok{(top_inc, top_inc}\OperatorTok{$}\NormalTok{Percentile }\OperatorTok{==}\StringTok{ "p99p100"}\NormalTok{)}
+\NormalTok{top_inc2 <-}\StringTok{ }\KeywordTok{subset}\NormalTok{(top_inc, top_inc}\OperatorTok{$}\NormalTok{Percentile }\OperatorTok{==}\StringTok{ "p90p100"}\NormalTok{)}
+\NormalTok{top_inc1 <-}\StringTok{ }\KeywordTok{subset}\NormalTok{(top_inc1, }\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(top_inc1}\OperatorTok{$}\NormalTok{cow))}
+\NormalTok{top_inc2 <-}\StringTok{ }\KeywordTok{subset}\NormalTok{(top_inc2, }\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(top_inc2}\OperatorTok{$}\NormalTok{cow))}
+
+\CommentTok{# Take the mean from 2010-2019 to account for missing data}
+\NormalTok{top_inc1 <-}\StringTok{ }\NormalTok{top_inc1[,}\KeywordTok{c}\NormalTok{(}\DecValTok{13}\OperatorTok{:}\DecValTok{22}\NormalTok{,}\DecValTok{23}\NormalTok{)]}
+\NormalTok{top_inc2 <-}\StringTok{ }\NormalTok{top_inc2[,}\KeywordTok{c}\NormalTok{(}\DecValTok{3}\OperatorTok{:}\DecValTok{12}\NormalTok{,}\DecValTok{23}\NormalTok{)]}
+\NormalTok{top_inc1}\OperatorTok{$}\NormalTok{top1 <-}\StringTok{ }\KeywordTok{rowMeans}\NormalTok{(top_inc1[,}\DecValTok{1}\OperatorTok{:}\DecValTok{10}\NormalTok{], }\DataTypeTok{na.rm =}\NormalTok{ T)}
+\NormalTok{top_inc2}\OperatorTok{$}\NormalTok{top10 <-}\StringTok{ }\KeywordTok{rowMeans}\NormalTok{(top_inc2[,}\DecValTok{1}\OperatorTok{:}\DecValTok{10}\NormalTok{], }\DataTypeTok{na.rm =}\NormalTok{ T)}
+\NormalTok{top_inc1 <-}\StringTok{ }\KeywordTok{select}\NormalTok{(top_inc1, cow, top1)}
+\NormalTok{top_inc2 <-}\StringTok{ }\KeywordTok{select}\NormalTok{(top_inc2, cow, top10)}
+\CommentTok{# china appears multiple times}
+\NormalTok{top_inc1 <-}\StringTok{ }\KeywordTok{aggregate}\NormalTok{(top_inc1, }\DataTypeTok{by =} \KeywordTok{list}\NormalTok{(top_inc1}\OperatorTok{$}\NormalTok{cow), }\DataTypeTok{FUN =}\NormalTok{ mean, }\DataTypeTok{na.rm =}\NormalTok{ T)}
+\NormalTok{top_inc2 <-}\StringTok{ }\KeywordTok{aggregate}\NormalTok{(top_inc2, }\DataTypeTok{by =} \KeywordTok{list}\NormalTok{(top_inc2}\OperatorTok{$}\NormalTok{cow), }\DataTypeTok{FUN =}\NormalTok{ mean, }\DataTypeTok{na.rm =}\NormalTok{ T)}
+\KeywordTok{rm}\NormalTok{(top_inc)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{solt-gini}{%
+\subsection{Solt Gini}\label{solt-gini}}
+
+The Solt data include multiple measures of the Gini for many countries.
+We take the average score provided by Solt for disposable income
+inequality.
+
+Solt, Frederick. 2020. ``Measuring Income Inequality Across Countries
+and Over Time: The Standardized World Income Inequality Database.''
+Social Science Quarterly \href{https://doi.org/10.1111/ssqu.12795}{DOI}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Solt Gini}
+\KeywordTok{load}\NormalTok{(}\StringTok{"data/swiid8_3.Rda"}\NormalTok{)}
+
+\KeywordTok{rm}\NormalTok{(swiid)}
+\NormalTok{swiid_summary}\OperatorTok{$}\NormalTok{cow <-}\StringTok{ }\KeywordTok{countrycode}\NormalTok{(swiid_summary}\OperatorTok{$}\NormalTok{country, }\StringTok{"country.name"}\NormalTok{, }\StringTok{"cown"}\NormalTok{)}
+
+\CommentTok{#some countries do not have data since 2016, take most recent available year}
+\NormalTok{swiid_summary <-}\StringTok{ }\NormalTok{swiid_summary }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{year =} \KeywordTok{ifelse}\NormalTok{(country }\OperatorTok{==}\StringTok{ "Algeria"} \OperatorTok{&}\StringTok{ }\NormalTok{year }\OperatorTok{==}\StringTok{ }\DecValTok{2011} \OperatorTok{|}\StringTok{ }\NormalTok{country }\OperatorTok{==}\StringTok{ "Brunei"} \OperatorTok{&}\StringTok{ }\NormalTok{year }\OperatorTok{==}\StringTok{ }\DecValTok{1981} \OperatorTok{|}\StringTok{ }\NormalTok{country }\OperatorTok{==}\StringTok{ "Bosnia and Herzegovina"} \OperatorTok{&}\StringTok{ }\NormalTok{year }\OperatorTok{==}\StringTok{ }\DecValTok{2015} \OperatorTok{|}\StringTok{ }\NormalTok{country }\OperatorTok{==}\StringTok{ "Grenada"} \OperatorTok{&}\StringTok{ }\NormalTok{year }\OperatorTok{==}\StringTok{ }\DecValTok{2008} \OperatorTok{|}\StringTok{ }\NormalTok{country }\OperatorTok{==}\StringTok{ "Guatemala"} \OperatorTok{&}\StringTok{ }\NormalTok{year }\OperatorTok{==}\StringTok{ }\DecValTok{2014} \OperatorTok{|}\StringTok{ }\NormalTok{country }\OperatorTok{==}\StringTok{ "Iceland"} \OperatorTok{&}\StringTok{ }\NormalTok{year }\OperatorTok{==}\StringTok{ }\DecValTok{2015} \OperatorTok{|}\StringTok{ }\NormalTok{country }\OperatorTok{==}\StringTok{ "India"} \OperatorTok{&}\StringTok{ }\NormalTok{year }\OperatorTok{==}\StringTok{ }\DecValTok{2012} \OperatorTok{|}\StringTok{ }\NormalTok{country }\OperatorTok{==}\StringTok{ "Japan"} \OperatorTok{&}\StringTok{ }\NormalTok{year }\OperatorTok{==}\StringTok{ }\DecValTok{2015} \OperatorTok{|}\StringTok{ }\NormalTok{country }\OperatorTok{==}\StringTok{ "Morocco"} \OperatorTok{&}\StringTok{ }\NormalTok{year }\OperatorTok{==}\StringTok{ }\DecValTok{2014} \OperatorTok{|}\StringTok{ }\NormalTok{country }\OperatorTok{==}\StringTok{ "Pakistan"} \OperatorTok{&}\StringTok{ }\NormalTok{year }\OperatorTok{==}\StringTok{ }\DecValTok{2015} \OperatorTok{|}\StringTok{ }\NormalTok{country }\OperatorTok{==}\StringTok{ "Philippines"} \OperatorTok{&}\StringTok{ }\NormalTok{year }\OperatorTok{==}\StringTok{ }\DecValTok{2015} \OperatorTok{|}\StringTok{ }\NormalTok{country }\OperatorTok{==}\StringTok{ "South Africa"} \OperatorTok{&}\StringTok{ }\NormalTok{year }\OperatorTok{==}\StringTok{ }\DecValTok{2015} \OperatorTok{|}\StringTok{ }\NormalTok{country }\OperatorTok{==}\StringTok{ "United Arab Emirates"} \OperatorTok{&}\StringTok{ }\NormalTok{year }\OperatorTok{==}\StringTok{ }\DecValTok{2008}\NormalTok{, }\DecValTok{2016}\NormalTok{, year))}
+
+\CommentTok{# trim Extremes ZAF BRN}
+\NormalTok{swiid_summary}\OperatorTok{$}\NormalTok{gini_disp <-}\StringTok{ }\KeywordTok{ifelse}\NormalTok{(swiid_summary}\OperatorTok{$}\NormalTok{gini_disp }\OperatorTok{>}\StringTok{ }\DecValTok{50}\NormalTok{, }\DecValTok{49}\NormalTok{, swiid_summary}\OperatorTok{$}\NormalTok{gini_disp)}
+
+
+\NormalTok{swiid_summary <-}\StringTok{ }\KeywordTok{subset}\NormalTok{(swiid_summary, year }\OperatorTok{>=}\StringTok{ }\DecValTok{2016}\NormalTok{)}
+\NormalTok{swiid_summary <-}\StringTok{ }\KeywordTok{select}\NormalTok{(swiid_summary, cow, gini_disp)}
+\NormalTok{swiid_summary <-}\StringTok{ }\KeywordTok{aggregate}\NormalTok{(swiid_summary, }\DataTypeTok{by =} \KeywordTok{list}\NormalTok{(swiid_summary}\OperatorTok{$}\NormalTok{cow), }\DataTypeTok{FUN =}\NormalTok{ mean, }\DataTypeTok{na.rm =}\NormalTok{ T)}
+\NormalTok{gini_disp <-}\StringTok{ }\KeywordTok{select}\NormalTok{(swiid_summary, cow, gini_disp)}
+
+\KeywordTok{rm}\NormalTok{(swiid_summary)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{st-merge-data}{%
+\subsection{1st Merge Data}\label{st-merge-data}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# The wider the date range the greater the chance of introducing global/regional period effects. Reduce range, but maximize country sample. }
+
+\CommentTok{# cis_b is to remain at individual level}
+\NormalTok{cis_b <-}\StringTok{ }\KeywordTok{subset}\NormalTok{(cis, date }\OperatorTok{<}\StringTok{ }\KeywordTok{as.Date}\NormalTok{(}\StringTok{'2020-05-01'}\NormalTok{))}
+
+\NormalTok{cis_a <-}\StringTok{ }\KeywordTok{aggregate}\NormalTok{(cis_b, }\DataTypeTok{by=}\KeywordTok{list}\NormalTok{(cis_b}\OperatorTok{$}\NormalTok{cow),}
+  \DataTypeTok{FUN=}\NormalTok{mean, }\DataTypeTok{na.rm=}\NormalTok{T)}
+
+\CommentTok{# Calculate SE for robustness check}
+\NormalTok{cis_asd <-}\StringTok{ }\KeywordTok{aggregate}\NormalTok{(cis_b, }\DataTypeTok{by=}\KeywordTok{list}\NormalTok{(cis_b}\OperatorTok{$}\NormalTok{cow),}
+  \DataTypeTok{FUN=}\NormalTok{sd, }\DataTypeTok{na.rm=}\NormalTok{T)}
+\NormalTok{cis_asd <-}\StringTok{ }\KeywordTok{select}\NormalTok{(cis_asd, Group}\FloatTok{.1}\NormalTok{, concern_self)}
+\KeywordTok{colnames}\NormalTok{(cis_asd) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"cow"}\NormalTok{, }\StringTok{"concern_self_sd"}\NormalTok{)}
+
+\NormalTok{cis_a <-}\StringTok{ }\KeywordTok{left_join}\NormalTok{(cis_a, cis_asd, }\DataTypeTok{by =} \StringTok{"cow"}\NormalTok{)}
+
+\NormalTok{cis_b}\OperatorTok{$}\NormalTok{cases <-}\StringTok{ }\KeywordTok{ifelse}\NormalTok{(cis_b}\OperatorTok{$}\NormalTok{cases}\OperatorTok{<}\DecValTok{20}\NormalTok{, }\OtherTok{NA}\NormalTok{, cis_b}\OperatorTok{$}\NormalTok{cases)}
+\NormalTok{cis_a}\OperatorTok{$}\NormalTok{cases <-}\StringTok{ }\KeywordTok{ifelse}\NormalTok{(cis_a}\OperatorTok{$}\NormalTok{cases}\OperatorTok{<}\DecValTok{20}\NormalTok{, }\OtherTok{NA}\NormalTok{, cis_a}\OperatorTok{$}\NormalTok{cases)}
+\NormalTok{cis_a <-}\StringTok{ }\KeywordTok{completeFun}\NormalTok{(cis_a, }\StringTok{"cases"}\NormalTok{)}
+
+\NormalTok{cis_a}\OperatorTok{$}\NormalTok{concern_self_se <-}\StringTok{ }\NormalTok{cis_a}\OperatorTok{$}\NormalTok{concern_self_sd}\OperatorTok{/}\KeywordTok{sqrt}\NormalTok{(cis_a}\OperatorTok{$}\NormalTok{cases)}
+
+\NormalTok{cis_a <-}\StringTok{ }\KeywordTok{select}\NormalTok{(cis_a, cow, concern_self, concern_society, dead, dead_l5, conf, conf_l5, conf_delta, dead_lead, dead_1st_date, curve_max, Corona_concerns_}\DecValTok{1}\NormalTok{, Corona_concerns_}\DecValTok{2}\NormalTok{, Corona_concerns_}\DecValTok{3}\NormalTok{, Corona_concerns_}\DecValTok{4}\NormalTok{, Corona_concerns_}\DecValTok{5}\NormalTok{, concern_self_se, cases)}
+
+
+\KeywordTok{colnames}\NormalTok{(cis_a) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"cow"}\NormalTok{,}\StringTok{"concern_self"}\NormalTok{,}\StringTok{"concern_society"}\NormalTok{, }\StringTok{"dead"}\NormalTok{, }\StringTok{"dead_lag5"}\NormalTok{, }\StringTok{"conf"}\NormalTok{, }\StringTok{"conf_lag5"}\NormalTok{, }\StringTok{"conf_delta"}\NormalTok{,}\StringTok{"dead_lead"}\NormalTok{, }\StringTok{"dead_1st_date"}\NormalTok{, }\StringTok{"curve_max"}\NormalTok{,}\StringTok{"Corona1"}\NormalTok{, }\StringTok{"Corona2"}\NormalTok{, }\StringTok{"Corona3"}\NormalTok{, }\StringTok{"Corona4"}\NormalTok{, }\StringTok{"Corona5"}\NormalTok{, }\StringTok{"concern_self_se"}\NormalTok{,}\StringTok{"cases"}\NormalTok{)}
+\CommentTok{# add iso}
+
+
+\NormalTok{cis_a}\OperatorTok{$}\NormalTok{iso <-}\StringTok{ }\KeywordTok{countrycode}\NormalTok{(cis_a}\OperatorTok{$}\NormalTok{cow, }\StringTok{"cown"}\NormalTok{, }\StringTok{"iso3c"}\NormalTok{)}
+
+\NormalTok{finaldf_C <-}\StringTok{ }\KeywordTok{full_join}\NormalTok{(cis_a, socp, }\DataTypeTok{by =} \StringTok{"cow"}\NormalTok{)}
+\NormalTok{finaldf_C <-}\StringTok{ }\KeywordTok{full_join}\NormalTok{(finaldf_C, geip, }\DataTypeTok{by =} \StringTok{"cow"}\NormalTok{)}
+\NormalTok{finaldf_C <-}\StringTok{ }\KeywordTok{full_join}\NormalTok{(finaldf_C, gdpc, }\DataTypeTok{by =} \StringTok{"cow"}\NormalTok{)}
+\NormalTok{finaldf_C <-}\StringTok{ }\KeywordTok{full_join}\NormalTok{(finaldf_C, gov_resp, }\DataTypeTok{by =} \StringTok{"cow"}\NormalTok{)}
+\NormalTok{finaldf_C <-}\StringTok{ }\KeywordTok{full_join}\NormalTok{(finaldf_C, top_inc1, }\DataTypeTok{by =} \StringTok{"cow"}\NormalTok{)}
+\NormalTok{finaldf_C <-}\StringTok{ }\KeywordTok{full_join}\NormalTok{(finaldf_C, top_inc2, }\DataTypeTok{by =} \StringTok{"cow"}\NormalTok{)}
+\NormalTok{finaldf_C <-}\StringTok{ }\KeywordTok{full_join}\NormalTok{(finaldf_C, gini_disp, }\DataTypeTok{by =} \StringTok{"cow"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{save.image}\NormalTok{(}\DataTypeTok{file=}\StringTok{"data/cis.RData"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{references}{%
+\subsection{References}\label{references}}
+
+Breznau, Nate. 2020. ``The Welfare State and Risk Perceptions: The Novel
+Coronavirus Pandemic and Public Concern in 70 Countries.''
+\emph{European Societies}.
+\href{https://doi.org/10.1080/14616696.2020.1793215}{DOI}
+
+\end{document}
