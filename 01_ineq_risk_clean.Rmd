@@ -1,6 +1,6 @@
 ---
 title: "Step 1 - Data Cleaning"
-author: "Anonymous"
+author: "Nate Breznau"
 date: "5/18/2020"
 output:
   word_document: default
